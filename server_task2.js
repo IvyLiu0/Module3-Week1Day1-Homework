@@ -1,27 +1,54 @@
 var http = require ('http');
-var path = require ('path');
 var fs = require ('fs');
-var url = require('url');
 
 var hostname = 'localhost';
 var port = 5000;
 
-var server = http.createServer ((req,res) => {
-    
-    var q = url.parse(req.url, true);
-    var filename = "." + q.pathname;
-    
-    fs.readFile(filename, function(err, data) {
-        if (err) {
-            res.writeHead (404, {'Content-Type': 'text/html'});
-            return res.end ("Invalid Request!");
-        }
-        res.writeHead(200, {'Content-Type': 'text/html'});
-        res.write(data);
-        return res.end();
-    });
+var server = http.createServer(function (req, resp) {
+
+    if (req.url === "/home") {
+        fs.readFile("./home.html", function (error, pgResp) {
+            if (error) {
+                resp.writeHead(404);
+                resp.write('Invalid Request!');
+            } else {
+                resp.writeHead(200, { 'Content-Type': 'text/html' });
+                resp.write(pgResp);
+            }
+             
+            resp.end();
+        });
+    } else if (req.url === "/about") {
+        fs.readFile("./about.html", function (error, pgResp) {
+            if (error) {
+                resp.writeHead(404);
+                resp.write('Invalid Request!');
+            } else {
+                resp.writeHead(200, { 'Content-Type': 'text/html' });
+                resp.write(pgResp);
+            }
+             
+            resp.end();
+        });
+    } else if (req.url === "/contact") {
+        fs.readFile("./contact.html", function (error, pgResp) {
+            if (error) {
+                resp.writeHead(404);
+                resp.write('Invalid Request!');
+            } else {
+                resp.writeHead(200, { 'Content-Type': 'text/html' });
+                resp.write(pgResp);
+            }
+
+            resp.end();
+        });
+    } else {
+        resp.writeHead(200, { 'Content-Type': 'text/html' });
+        resp.write('Invalid Request!');
+        resp.end();
+    }
 });
 
 server.listen(port, hostname, () => {
-    console.log(`The NodeJS server on port 5000 is now running...`);
+    console.log('The NodeJS server on port 5000 is now running...');
 });

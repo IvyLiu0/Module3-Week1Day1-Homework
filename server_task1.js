@@ -7,7 +7,7 @@ var server = http.createServer ((req,res) => {
     
     if (req.url === '/') {
         res.setHeader("content-Type", "text/html");
-        res.writeHead(404);
+        res.writeHead(200);
         res.end('<html><body><h1>Home Page.</h1></body></html>');
     } else if (req.url === '/about') {
         res.setHeader("content-Type", "text/html");
